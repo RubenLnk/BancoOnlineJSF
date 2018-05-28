@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Login</title>
+    </h:head>
+    <h:body>
+
+        <p:panel style="text-align: center">
+            <h:outputText value="Bienvenido"/>							
+        </p:panel>
+		
+	<h:outputText value="&#160;" />
+        
+	<h:form>
+            <p:panel header="Solo se admiten letras y numeros con un mínimo de 3 caracteres" style="text-align: center">
+		 
+		<h:panelGrid id="login" columns="4" cellpadding="8" style="text-align: center">
+		        
+                    <h:outputLabel for="usuario" value="#{mensajes.user}:" style="font-weight:bold" />
+                    <p:inputText id="usuario" value="#{login.nombre}" required="true" validatorMessage="#{mensajes.identifier_not_valid}" style="text-align: center">
+		        <f:validateRegex pattern="^[0-9a-zA-Z]+$" />
+		        <f:validateLength minimum="3" maximum="10" />
+		    </p:inputText>
+                    
+		    <p:message for="usuario" />
+		    <h:outputText value="" />
+		 			
+                    <h:outputLabel for="contrasenya" value="#{mensajes.password}:" style="font-weight:bold" />
+                    <p:inputText id="contrasenya" value="#{login.contrasenya}" required="true" validatorMessage="#{mensajes.identifier_not_valid}" style="text-align: center">
+		        <f:validateRegex pattern="^[0-9a-zA-Z]+$" />
+		        <f:validateLength minimum="3" maximum="50" />
+		    </p:inputText>
+		    
+                    <p:message for="contrasenya" />
+
+		</h:panelGrid>
+		        		        
+                <p:commandButton action="#{login.validar}" value="#{mensajes.login}" ajax="false" icon="ui-icon-check" validateClient="true" />				
+            </p:panel>		    
+	</h:form>
+    </h:body>
+</html>
+
