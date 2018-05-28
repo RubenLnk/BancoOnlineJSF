@@ -32,13 +32,18 @@ public class EmpleadoFacade extends AbstractFacade<Empleado> {
         super(Empleado.class);
     }
     
-    public List<Empleado> buscarEmpleadoPorDniYPassword(String dni, String password) {
+    public Empleado buscarEmpleadoPorDniYPassword(String dni, String password) {
         Query q = this.em.createQuery("select e from Empleado e where e.dni like :dni" +
                 " and e.password like :password");
         q.setParameter("dni", dni);
         q.setParameter("password", password);
         
-        return q.getResultList();
+        List<Empleado> empleados = q.getResultList();
+        if(empleados.size() <= 0) {
+            return null;
+        } else {
+            return empleados.get(0);
+        }
     }
             
     

@@ -32,12 +32,17 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         super(Usuario.class);
     }
     
-    public List<Usuario> buscarUsuarioPorDniYPassword(String dni, String password) {
+    public Usuario buscarUsuarioPorDniYPassword(String dni, String password) {
         Query q = this.em.createQuery("select u from Usuario u where u.dni like :dni " +
                 "and u.password like :password");
         q.setParameter("dni", dni);
         q.setParameter("password", password);
         
-        return q.getResultList();
+        List<Usuario> usuarios = q.getResultList();
+        if(usuarios.size() <= 0) {
+            return null;
+        } else {
+            return usuarios.get(0);
+        }
     }
 }

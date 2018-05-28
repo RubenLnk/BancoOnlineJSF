@@ -32,18 +32,30 @@ public class CuentaFacade extends AbstractFacade<Cuenta> {
         super(Cuenta.class);
     }
     
-    public List<Cuenta> buscarCuentaPorIdUsuario(Usuario usuario) {
+    public Cuenta buscarCuentaPorIdUsuario(Usuario usuario) {
         Query q = this.em.createQuery("select c from Cuenta c where c.idUsuario = :usuario")
                 .setParameter("usuario", usuario);
         
-        return q.getResultList();
+        List<Cuenta> cuentas = q.getResultList();
+        
+        if(cuentas.size() <= 0) {
+            return null;
+        } else {
+            return cuentas.get(0);
+        }
     }
     
-    public List<Cuenta> buscarCuentaPorCuentaCorriente(String cuentaCorriente) {
+    public Cuenta buscarCuentaPorCuentaCorriente(String cuentaCorriente) {
         Query q = this.em.createQuery("select c from Cuenta c where c.cuentaCorriente like :cuentaCorriente")
                 .setParameter("cuentaCorriente", cuentaCorriente);
         
-        return q.getResultList();
+        List<Cuenta> cuentas = q.getResultList();
+        
+        if(cuentas.size() <= 0) {
+            return null;
+        } else {
+            return cuentas.get(0);
+        }
     }
     
 }
