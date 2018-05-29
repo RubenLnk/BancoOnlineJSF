@@ -1,12 +1,58 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        indexEmpleado
+        <p:panel header="#{mensajes.menu}" style="text-align: center">
+            <h:form>
+                <p:commandButton value="#{mensajes.home}" title="#{mensajes.home_desc}" action="#" />
+                <p:commandButton value="#{mensajes.create_user}" action="#" />
+                <p:commandButton value="#{mensajes.list_users}" action="#" />
+                <p:commandButton value="#{mensajes.list_accounts}" action="#" />
+                <p:commandButton value="#{mensajes.list_moves}" action="#" />
+                <p:commandButton value="#{mensajes.list_transfers}" action="#" />
+                <p:commandButton value="#{mensajes.logout}" action="#" />
+            </h:form>
+        </p:panel>
+        <div align="center" style="margin: 10px; width: 600px">
+            <p:tabView>
+                <p:tab title="#{mensajes.create_move}">
+                    <div align="center">
+                        <p:messages id="messages" />
+                        <h:form>
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:outputLabel for="cantidad" value="#{mensajes.amount}:" />
+                                <p:inputText id="cantidad" required="true" value="#{movimientoBean.movimiento.cantidad}">
+                                    <f:validateLongRange minimum="0" />
+                                </p:inputText>
+
+                                <h:outputLabel for="concepto" value="#{mensajes.concept}:" />
+                                <p:inputText id="concepto" required="true" value="#{movimientoBean.movimiento.concepto}"/>
+
+                                <h:outputLabel for="cuenta" value="#{mensajes.account}:" />
+                                <p:inputText id="cuenta" required="true" value="#{movimientoBean.idCuenta}" placeholder="0000 0000 00 0000000000"/>
+
+                                <h:outputLabel for="tipo" value="#{mensajes.type}:" />
+                                <p:selectOneMenu id="tipo" value="#{movimientoBean.tipo}" style="width: 125px">
+                                    <f:selectItem itemLabel="#{mensajes.income}" itemValue="ingreso" />
+                                    <f:selectItem itemLabel="#{mensajes.expense}" itemValue="gasto" />
+                                </p:selectOneMenu>
+                            </h:panelGrid>
+                            <p:commandButton value="#{mensajes.send}" actionListener="#{movimientoBean.crearMovimiento()}" id="button" icon="ui-icon-arrowthick-1-e" ajax="false"/>
+                        </h:form>
+                    </div>
+                </p:tab>
+                <p:tab title="#{mensajes.create_user}">
+                    asdasd
+                </p:tab>
+            </p:tabView>
+        </div>
+        
     </h:body>
 </html>
 
