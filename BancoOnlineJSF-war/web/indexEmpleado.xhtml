@@ -20,11 +20,11 @@
             </h:form>
         </p:panel>
         <div align="center" style="margin: 10px; width: 600px">
+            <p:messages />
             <p:tabView>
                 <p:tab title="#{mensajes.create_move}">
                     <div align="center">
-                        <p:messages id="messages" />
-                        <h:form>
+                        <h:form id="move_form">
                             <h:panelGrid columns="2" cellpadding="5">
                                 <h:outputLabel for="cantidad" value="#{mensajes.amount}:" />
                                 <p:inputText id="cantidad" required="true" value="#{movimientoBean.movimiento.cantidad}">
@@ -48,7 +48,56 @@
                     </div>
                 </p:tab>
                 <p:tab title="#{mensajes.create_user}">
-                    asdasd
+                    <div align="center">
+                        <h:form id="user_form">
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:outputLabel for="dni" value="#{mensajes.dni}:" />
+                                <p:inputText id="dni" required="true" value="#{crearUsuarioBean.usuario.dni}" />
+
+                                <h:outputLabel for="password" value="#{mensajes.password}:" />
+                                <p:password id="password" required="true" value="#{crearUsuarioBean.usuario.password}" 
+                                            feedback="true" promptLabel="#{mensajes.password_label}" weakLabel="#{mensajes.weak}"
+                                            goodLabel="#{mensajes.good}" strongLabel="#{mensajes.strong}">
+                                    <f:validator validatorId="confirmPasswordValidator" />
+                                    <f:attribute name="confirm" value="#{confirmPassword.submittedValue}" />
+                                    <f:ajax event="blur" execute="password confirm" render="m_password" />
+                                </p:password>
+                                <p:message id="m_password" for="password" />
+                                &nbsp;
+
+                                <h:outputLabel for="confirm" value="#{mensajes.confirm_password}:" />
+                                <p:password id="confirm" required="true" binding="#{confirmPassword}">
+                                    <f:ajax event="blur" execute="password confirm" render="m_password m_confirm" />
+                                </p:password>
+                                <p:message id="m_confirm" for="confirm" />
+                                &nbsp;
+                                
+                                <h:outputLabel for="name" value="#{mensajes.name}:" />
+                                <p:inputText id="name" required="true" value="#{crearUsuarioBean.usuario.nombre}" />
+                                
+                                <h:outputLabel for="surname" value="#{mensajes.surname}:" />
+                                <p:inputText id="surname" required="true" value="#{crearUsuarioBean.usuario.apellidos}" />
+                                
+                                <h:outputLabel for="phone" value="#{mensajes.phone}:" />
+                                <p:inputText id="phone" required="true" value="#{crearUsuarioBean.usuario.telefono}" />
+                                
+                                <h:outputLabel for="email" value="#{mensajes.email}:" />
+                                <p:inputText id="email" required="true" value="#{crearUsuarioBean.usuario.email}" />
+                                
+                                <h:outputLabel for="birthdate" value="#{mensajes.birthdate}:" />
+                                <p:inputText id="birthdate" required="true" value="#{crearUsuarioBean.usuario.fechaNacimiento}" placeholder="dd/mm/aaaa">
+                                    <f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+                                </p:inputText>
+                                
+                                <h:outputLabel for="address" value="#{mensajes.address}:" />
+                                <p:inputText id="address" required="true" value="#{crearUsuarioBean.usuario.domicilio}" />
+                                
+                                <h:outputLabel for="account" value="#{mensajes.account}:" />
+                                <p:inputText id="account" required="true" value="#{crearUsuarioBean.idCuenta}" placeholder="0000 0000 00 0000000000"/>
+                            </h:panelGrid>
+                            <p:commandButton value="#{mensajes.send}" actionListener="#{crearUsuarioBean.crearUsuario()}" id="button" icon="ui-icon-arrowthick-1-e" ajax="false"/>
+                        </h:form>
+                    </div>
                 </p:tab>
             </p:tabView>
         </div>

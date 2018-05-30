@@ -34,6 +34,9 @@ public class MovimientoBean {
     @Inject
     private Login login;
     
+    @Inject
+    private ErrorBean errorBean;
+    
     private Movimiento movimiento;
     private String idCuenta;
     private String tipo;
@@ -81,6 +84,8 @@ public class MovimientoBean {
             if(tipo.equals("gasto")) {
                 if(cuenta.getSaldo().subtract(movimiento.getCantidad()).longValue() < 0) {
                    pagina = "error";
+                   errorBean.setTitle("Su cuenta no tiene suficiente saldo");
+                   errorBean.setSubtitle("Por favor, introduzca un valor válido o ingrese más dinero en su cuenta.");
                 } else {
                     this.movimientoFacade.create(movimiento);
 
@@ -95,6 +100,8 @@ public class MovimientoBean {
             }
         } else {
            pagina = "error"; 
+           errorBean.setTitle("No existe la cuenta corriente especificada");
+           errorBean.setSubtitle("Por favor, especifique una cuenta correcta.");
         }
         
         return pagina;
