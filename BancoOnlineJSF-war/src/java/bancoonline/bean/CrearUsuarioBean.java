@@ -35,6 +35,9 @@ public class CrearUsuarioBean {
     @Inject
     private Login login;
     
+    @Inject
+    private ErrorBean errorBean;
+    
     private Usuario usuario;
     private String idCuenta;
     /**
@@ -81,6 +84,8 @@ public class CrearUsuarioBean {
             
         } else {
             pagina = "error";
+            errorBean.setTitle("El número de cuenta corriente introducido ya existe");
+            errorBean.setSubtitle("Por favor, introduzca otro número de cuenta corriente.");
         }
         
         return pagina;

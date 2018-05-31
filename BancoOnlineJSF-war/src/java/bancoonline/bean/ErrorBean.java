@@ -5,16 +5,18 @@
  */
 package bancoonline.bean;
 
+import java.io.Serializable;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 
 /**
  *
  * @author ruben
  */
 @Named(value = "errorBean")
-@RequestScoped
-public class ErrorBean {
+@SessionScoped
+public class ErrorBean implements Serializable {
     
     private String title;
     private String subtitle;

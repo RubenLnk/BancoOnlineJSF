@@ -19,9 +19,9 @@
                 <p:commandButton value="#{mensajes.logout}" action="#" />
             </h:form>
         </p:panel>
-        <div align="center" style="margin: 10px; width: 600px">
+        <div align="center" style="margin: 10px;">
             <p:messages />
-            <p:tabView>
+            <p:tabView style="width: 600px">
                 <p:tab title="#{mensajes.create_move}">
                     <div align="center">
                         <h:form id="move_form">
@@ -43,7 +43,7 @@
                                     <f:selectItem itemLabel="#{mensajes.expense}" itemValue="gasto" />
                                 </p:selectOneMenu>
                             </h:panelGrid>
-                            <p:commandButton value="#{mensajes.send}" actionListener="#{movimientoBean.crearMovimiento()}" id="button" icon="ui-icon-arrowthick-1-e" ajax="false"/>
+                            <p:commandButton value="#{mensajes.send}" action="#{movimientoBean.crearMovimiento()}" id="button" icon="ui-icon-arrowthick-1-e" ajax="false"/>
                         </h:form>
                     </div>
                 </p:tab>
@@ -95,7 +95,7 @@
                                 <h:outputLabel for="account" value="#{mensajes.account}:" />
                                 <p:inputText id="account" required="true" value="#{crearUsuarioBean.idCuenta}" placeholder="0000 0000 00 0000000000"/>
                             </h:panelGrid>
-                            <p:commandButton value="#{mensajes.send}" actionListener="#{crearUsuarioBean.crearUsuario()}" id="button" icon="ui-icon-arrowthick-1-e" ajax="false"/>
+                            <p:commandButton value="#{mensajes.send}" action="#{crearUsuarioBean.crearUsuario()}" id="button" icon="ui-icon-arrowthick-1-e" ajax="false"/>
                         </h:form>
                     </div>
                 </p:tab>
