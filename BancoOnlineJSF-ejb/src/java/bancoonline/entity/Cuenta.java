@@ -138,7 +138,8 @@ public class Cuenta implements Serializable {
 
     @Override
     public String toString() {
-        return "bancoonline.entity.Cuenta[ idCuenta=" + idCuenta + " ]";
+        //return "bancoonline.entity.Cuenta[ idCuenta=" + idCuenta + " ]";
+        return cuentaCorriente;
     }
     
 }

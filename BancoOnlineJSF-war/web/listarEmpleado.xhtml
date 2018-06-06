@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Listados</title>
+    </h:head>
+    
+    <h:body>
+        #{navegacionManagedBean.setPagina("")}
+        <p:panel header="#{mensajes.menu}" style="text-align: left" >           
+            <h:form>
+                <div style="text-align: center">
+                    <span>Bienvenido, <span style="text-transform: capitalize">#{navegacionManagedBean.login.empleado.nombre}</span></span>
+                
+                    <div style="float: left">
+                        <p:commandButton value="#{mensajes.home}" title="#{mensajes.home_desc}" 
+                                     icon="ui-icon-home" action="#{navegacionManagedBean.goHome()}" ajax="false"/>
+                        <p:commandButton value="#{mensajes.show}" title="#{mensajes.show_desc}" 
+                                     icon="ui-icon-folder-open" action="#{navegacionManagedBean.goShow()}" ajax="false"/>
+                    </div>
+                    
+                    <div style="float: right">
+                        <p:commandButton type="button" value="#{mensajes.logout}" title="#{mensajes.logout_desc}"
+                                     icon="ui-icon-extlink" action="#" />
+                    </div>
+                    
+                    <div style="clear: both"/>
+                </div>
+            </h:form>
+        </p:panel>
+        
+        <div align="center" style="margin: 10px;">
+            <p:tabView  style="width: 1200px">
+                <p:tab title="#{mensajes.moves}" id="moves">
+                    <p:dataTable var="move" value="#{listarMovimientosBean.listaMovimientos}" rows="10" paginator="true">
+                        <p:column headerText="#{mensajes.id}">
+                            <h:outputText value="#{move.idMovimiento}"/>
+                        </p:column>
+                        <p:column headerText="#{mensajes.user}">
+                            <h:outputText value="#{move.idCuenta.idUsuario.nombre} #{move.idCuenta.idUsuario.apellidos}" style="text-transform: capitalize"/>
+                        </p:column>
+                        <p:column headerText="#{mensajes.account}">
+                            <h:outputText value="#{move.idCuenta.cuentaCorriente}"/>
+                        </p:column>
+                        <p:column headerText="#{mensajes.concept}">
+                            <h:outputText value="#{move.concepto}"/>
+                        </p:column>
+                        <p:column headerText="#{mensajes.amount}">
+                            <h:outputText value="#{move.cantidad}"/>
+                        </p:column>
+                        <p:column headerText="#{mensajes.made_by}">
+                            <h:outputText value="#{move.idEmpleado.nombre} #{move.idEmpleado.apellidos}" style="text-transform: capitalize"/>
+                        </p:column>
+                    </p:dataTable>
+                </p:tab>
+                <p:tab title="#{mensajes.transfers}" id="transfers">
+                    <p:dataTable var="transfer" value="#{listarTransferenciasBean.listaTransferencias}" rows="10" paginator="true">
+                        <p:column headerText="#{mensajes.id}">
+                            <h:outputText value="#{transfer.idTransferencia}"/>
+                        </p:column>
+                        <p:column headerText="#{mensajes.date}">
+                            <h:outputText value="#{transfer.fecha}">
+                                <f:convertDateTime pattern="dd/MM/yyy HH:MM"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{mensajes.amount}">
+                            <h:outputText value="#{transfer.cantidad}"/>
+                        </p:column>
+                        <p:column headerText="#{mensajes.concept}">
+                            <h:outputText value="#{transfer.concepto}"/>
+                        </p:column>
+                        <p:column headerText="#{mensajes.account} #{mensajes.from} #{mensajes.origin}">
+                            <h:outputText value="#{listarTransferenciasBean.buscarUsuarioCuenta(transfer.origen)}"/>
+                        </p:column>
+                        <p:column headerText="#{mensajes.account} #{mensajes.from} #{mensajes.destiny}">
+                            <h:outputText value="#{listarTransferenciasBean.buscarUsuarioCuenta(transfer.destino)}"/>
+                        </p:column>
+                    </p:dataTable>
+                </p:tab>
+                <p:tab title="#{mensajes.accounts}" id="accounts">
+                    <p:dataTable var="account" value="#{listarCuentasBean.listaCuentas}" rows="10" paginator="true">
+                        <p:column headerText="#{mensajes.id}">
+                            <h:outputText value="#{account.idCuenta}"/>
+                        </p:column>
+                        <p:column headerText="#{mensajes.user}">
+                            <h:outputText value="#{account.idUsuario.nombre} #{account.idUsuario.apellidos}" style="text-transform: capitalize"/>
+                        </p:column>
+                        <p:column headerText="#{mensajes.account}">
+                            <h:outputText value="#{account.cuentaCorriente}"/>
+                        </p:column>
+                        <p:column headerText="#{mensajes.balance}">
+                            <h:outputText value="#{account.saldo}"/>
+                        </p:column>                       
+                    </p:dataTable>
+                </p:tab>
+                <p:tab title="#{mensajes.users}" id="users">
+                    <p:dataTable var="user" value="#{listarUsuariosBean.listaUsuarios}" rows="10" paginator="true">
+                        <p:column headerText="#{mensajes.id}">
+                            <h:outputText value="#{user.idUsuario}"/>
+                        </p:column>
+                        <p:column headerText="#{mensajes.dni}">
+                            <h:outputText value="#{user.dni}"/>
+                        </p:column>
+                        <p:column headerText="#{mensajes.name}">
+                            <h:outputText value="#{user.nombre}" style="text-transform: capitalize"/>
+                        </p:column>
+                        <p:column headerText="#{mensajes.surname}">
+                            <h:outputText value="#{user.apellidos}" style="text-transform: capitalize"/>
+                        </p:column>                       
+                        <p:column headerText="#{mensajes.date_birthday}">
+                            <h:outputText value="#{user.fechaNacimiento}">
+                                <f:convertDateTime pattern="dd/MM/yyy HH:MM"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{mensajes.email}">
+                            <h:outputText value="#{user.email}"/>
+                        </p:column> 
+                        <p:column headerText="#{mensajes.address}">
+                            <h:outputText value="#{user.domicilio}"/>
+                        </p:column> 
+                        <p:column headerText="#{mensajes.date_system}">
+                            <h:outputText value="#{user.fechaAlta}">
+                                <f:convertDateTime pattern="dd/MM/yyy HH:MM"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{mensajes.employee}">
+                            <h:outputText value="#{user.empleado.nombre} #{user.empleado.apellidos}" style="text-transform: capitalize"/>
+                        </p:column> 
+                    </p:dataTable>
+                </p:tab>
+            </p:tabView>
+        </div>
+    </h:body>
+    
+</html>

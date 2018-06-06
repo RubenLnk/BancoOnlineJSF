@@ -8,15 +8,26 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <p:panel header="#{mensajes.menu}" style="text-align: center">
+        #{navegacionManagedBean.setPagina("")}
+        <p:panel header="#{mensajes.menu}" style="text-align: left" >           
             <h:form>
-                <p:commandButton value="#{mensajes.home}" title="#{mensajes.home_desc}" action="#" />
-                <p:commandButton value="#{mensajes.create_user}" action="#" />
-                <p:commandButton value="#{mensajes.list_users}" action="#" />
-                <p:commandButton value="#{mensajes.list_accounts}" action="#" />
-                <p:commandButton value="#{mensajes.list_moves}" action="#" />
-                <p:commandButton value="#{mensajes.list_transfers}" action="#" />
-                <p:commandButton value="#{mensajes.logout}" action="#" />
+                <div style="text-align: center">
+                    <span>Bienvenido, <span style="text-transform: capitalize">#{navegacionManagedBean.login.empleado.nombre}</span></span>
+                
+                    <div style="float: left">
+                        <p:commandButton value="#{mensajes.home}" title="#{mensajes.home_desc}" 
+                                     icon="ui-icon-home" action="#{navegacionManagedBean.goHome()}" ajax="false"/>
+                        <p:commandButton value="#{mensajes.show}" title="#{mensajes.show_desc}" 
+                                     icon="ui-icon-folder-open" action="#{navegacionManagedBean.goShow()}" ajax="false"/>
+                    </div>
+                    
+                    <div style="float: right">
+                        <p:commandButton type="button" value="#{mensajes.logout}" title="#{mensajes.logout_desc}"
+                                     icon="ui-icon-extlink" action="#" />
+                    </div>
+                    
+                    <div style="clear: both"/>
+                </div>
             </h:form>
         </p:panel>
         <div align="center" style="margin: 10px;">

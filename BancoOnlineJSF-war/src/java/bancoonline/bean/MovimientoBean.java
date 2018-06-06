@@ -73,7 +73,7 @@ public class MovimientoBean {
     
     public String crearMovimiento() {
         
-        String pagina = "indexEmpleado";
+        String pagina = "listarEmpleado";
         
         Cuenta cuenta = this.cuentaFacade.buscarCuentaPorCuentaCorriente(idCuenta);
         if(cuenta != null) {
