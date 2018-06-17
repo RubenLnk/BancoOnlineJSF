@@ -23,8 +23,8 @@
                     </div>
                     
                     <div style="float: right">
-                        <p:commandButton type="button" value="#{mensajes.logout}" title="#{mensajes.logout_desc}"
-                                     icon="ui-icon-extlink" action="#" />
+                        <p:commandButton value="#{mensajes.logout}" title="#{mensajes.logout_desc}"
+                                         icon="ui-icon-extlink" action="#{login.desconectar()}" ajax="false"/>
                     </div>
                     
                     <div style="clear: both"/>

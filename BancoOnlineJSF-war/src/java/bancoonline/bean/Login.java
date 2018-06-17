@@ -16,7 +16,6 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
 
 /**
  *
@@ -74,6 +73,14 @@ public class Login implements Serializable{
     public void setEmpleado(Empleado empleado) {
         this.empleado = empleado;
     }
+
+    public Cuenta getCuenta() {
+        return cuenta;
+    }
+
+    public void setCuenta(Cuenta cuenta) {
+        this.cuenta = cuenta;
+    }
     
     
     
@@ -109,9 +116,20 @@ public class Login implements Serializable{
         return pagina;
     }
     
+    public String desconectar() {
+        
+        this.init();
+        
+        return "login";
+    }
+    
     @PostConstruct
     public void init(){
-        
+        nombre = "";
+        contrasenya = "";
+        usuario = null;
+        cuenta = null;
+        empleado = null;
     }
     
 }

@@ -1,12 +1,153 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Index</title>
     </h:head>
     <h:body>
-        indexUsuario
+        #{navegacionManagedBean.setPagina("")}
+        <p:panel header="#{mensajes.menu}" style="text-align: left" >           
+            <h:form>
+                <div style="text-align: center">
+                    <span>Bienvenido, <span style="text-transform: capitalize">#{navegacionManagedBean.login.usuario.nombre}</span></span>
+                
+                    <div style="float: left">
+                        <p:commandButton value="Transferencias" title="Realizar transferencias" type="button" 
+                                            onclick="PF('realizarTransferencia').show();" icon="ui-icon-transferthick-e-w" >
+                        </p:commandButton>
+                    </div>
+                    
+                    <div style="float: right">
+                        <p:commandButton value="#{mensajes.logout}" title="#{mensajes.logout_desc}"
+                                         icon="ui-icon-extlink" action="#{login.desconectar()}" ajax="false"/>
+                    </div>
+                    
+                    <div style="clear: both"/>
+                </div>
+            </h:form>
+        </p:panel>
+        
+        <h:outputText value="&#160;" />
+        <p:messages />
+        <p:panel style="text-align: center" rendered="#{usuarioIndex.mensajes}">
+            <div align="center">
+                <h:panelGrid columns="1">
+                    <h:outputText value="#{mensajes.insufficient_balance}" rendered="#{usuarioIndex.saldoInsuficiente}" style="color: red"/>
+                    <h:outputText value="#{mensajes.account_doesnt_exist}" rendered="#{usuarioIndex.cuentaInexistente}" style="color: red"/>
+                </h:panelGrid>
+            </div>
+        </p:panel>
+        
+        <h:outputText value="&#160;" rendered="#{usuarioIndex.mensajes}"/>
+        
+        <p:panel header="#{mensajes.account_balance}: #{login.cuenta.cuentaCorriente}" style="text-align: center">
+            <div align="center">
+            <h:panelGrid columns="2" >                
+                    <h:outputText value="#{login.cuenta.saldo}"/>                              
+            </h:panelGrid>
+            </div>
+	</p:panel>
+        
+        <h:outputText value="&#160;" />
+        
+        <p:panel header="#{mensajes.queries}" style="text-align: center">
+            <p:tabView>
+                <p:tab title="#{mensajes.moves}">
+                    <div align="center">
+                        <p:dataTable var="movimiento" value="#{usuarioIndex.movimientos}">
+                            <p:column headerText="#{mensajes.date}" sortBy="#{movimiento.fecha}">
+                                <h:outputText value="#{movimiento.fecha}">
+                                    <f:convertDateTime dateStyle="long" type="both" timeZone="CET" />
+                                </h:outputText>                              
+                            </p:column>
+                            <p:column headerText="#{mensajes.amount}" sortBy="#{movimiento.cantidad}">
+                                <h:outputText value="#{movimiento.cantidad}" />
+                            </p:column>
+                            <p:column headerText="#{mensajes.concept}" sortBy="#{movimiento.concepto}">
+                                <h:outputText value="#{movimiento.concepto}" />
+                            </p:column>                           
+                        </p:dataTable>
+                    </div>
+                </p:tab>
+                
+                <p:tab title="#{mensajes.made_transfers}">
+                    <div align="center">
+                        <p:dataTable var="transferReal" value="#{usuarioIndex.transferenciasReal}" id="transferenciaReal">
+                            <p:column headerText="#{mensajes.date}" sortBy="#{transferReal.fecha}">
+                                <h:outputText value="#{transferReal.fecha}">
+                                    <f:convertDateTime dateStyle="long" type="both" timeZone="CET" />
+                                </h:outputText>                              
+                            </p:column>
+                            <p:column headerText="#{mensajes.amount}" sortBy="#{transferReal.cantidad}">
+                                <h:outputText value="#{transferReal.cantidad}" />
+                            </p:column>
+                            <p:column headerText="#{mensajes.concept}" sortBy="#{transferReal.concepto}">
+                                <h:outputText value="#{transferReal.concepto}" />
+                            </p:column>
+                            <p:column headerText="#{mensajes.account}" sortBy="#{transferReal.destino.cuentaList.get(0)}">
+                                <h:outputText value="#{transferReal.destino.cuentaList.get(0)}" />
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </p:tab>
+
+                <p:tab title="#{mensajes.received_transfers}">
+                    <div align="center">
+                        <p:dataTable var="transferReal" value="#{usuarioIndex.transferenciasReci}">
+                            <p:column headerText="#{mensajes.date}" sortBy="#{transferReal.fecha}">
+                                <h:outputText value="#{transferReal.fecha}">
+                                    <f:convertDateTime dateStyle="long" type="both" timeZone="CET" />
+                                </h:outputText>                              
+                            </p:column>
+                            <p:column headerText="#{mensajes.amount}" sortBy="#{transferReal.cantidad}">
+                                <h:outputText value="#{transferReal.cantidad}" />
+                            </p:column>
+                            <p:column headerText="#{mensajes.concept}" sortBy="#{transferReal.concepto}">
+                                <h:outputText value="#{transferReal.concepto}" />
+                            </p:column>
+                            <p:column headerText="#{mensajes.account}" sortBy="#{transferReal.destino.cuentaList.get(0)}">
+                                <h:outputText value="#{transferReal.destino.cuentaList.get(0)}" />
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </p:tab>
+
+            </p:tabView>
+        </p:panel>
+        
+        <!-- Ventana emergente -->
+        <p:dialog header="#{mensajes.transfers}" widgetVar="realizarTransferencia" modal="true" height="200" id="tranferencia">
+            <h:form>
+                <div align="center">
+                <h:panelGrid columns="2" cellpadding="5" >
+                    <h:outputLabel for="cuenta" value="#{mensajes.destiny_account}:" />
+                    <p:inputText id="cuenta" value="#{usuarioIndex.cuentaDestino}" required="true">
+                        <f:validateLength maximum="50" />
+                    </p:inputText>
+
+                    <h:outputLabel for="concepto" value="#{mensajes.concept}:" />
+                    <p:inputText id="concepto" value="#{usuarioIndex.concepto}" required="true">
+                        <f:validateLength maximum="50" />
+                    </p:inputText>
+
+                    <h:outputLabel for="cantidad" value="#{mensajes.amount}:" />
+                    <p:inputText id="cantidad" value="#{usuarioIndex.cantidad}" required="true">
+                        <f:validateLongRange minimum="0"/>
+                    </p:inputText>
+                </h:panelGrid>
+                
+                <p:commandButton value="#{mensajes.make_transfer}" action="#{usuarioIndex.transferir}" ajax="false"
+                                 onclick="PF('dlg').show().hide" />	
+               </div>
+                
+            </h:form>
+            
+	</p:dialog>
+        
+        
     </h:body>
 </html>
 
